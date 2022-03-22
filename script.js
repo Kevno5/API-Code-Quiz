@@ -48,25 +48,47 @@ var questions = [
 
 
     ];
+    var timerInterval;
     var timeRemaining = 60;
     function startTimer(){
-       var timerInterval = setInterval(function(){
-            timeRemaining--;
-
-            if(timeRemaining === 0){
-                clearInterval(timerInterval);
-                showResults();
-            }
-
-            document.getElementById('time').textContent = timeRemaining;
-            console.log('interval running', timeRemaining);
-        }, 1000);     
-    }
+         timerInterval = setInterval(function(){
+             timeRemaining--;
+ 
+             if(timeRemaining === 0){
+                 clearInterval(timerInterval);
+                 showResults();
+                 
+             }
+             //check if there is no more questions
+             if(questionIndex === questions.length){
+                 clearInterval(startTimer);
+                 showResults();
+             }else{
+       askNextQuestion();
+                
+             }
+        
+       
+ 
+             document.getElementById('time').textContent = timeRemaining;
+             console.log('interval running', timeRemaining);
+         }, 1000);     
+     }
 
     
     function showResults(){
-        alert('Game is over');
+        clearInterval(timerInterval);
+        var results = document.getElementById('end');
+        results.removeAttribute('class');
 
+        var score = document.getElementById('final-score');
+        score.textContent = timeRemaining;
+
+        divContainerEl.style.display = 'none;'
+
+        questionResultDiv.remove();
+
+        
     }
 
     var questionIndex = 0;
@@ -81,10 +103,7 @@ var questions = [
 
         answerChoicesEl.innerHTML = '';
 
-        if(questionIndex >= questions.length){
-            console.log('over');
-                
-            }
+        
 
         var liTag = document.createElement('li');
         liTag.setAttribute('class', 'li_all');
@@ -142,7 +161,7 @@ var questions = [
                 questionResultDiv.textContent = "Correct!";
                 timeRemaining = timeRemaining + 10;
                 questionIndex++;
-                askNextQuestion();
+                
                 
             }else{
                 questionResultDiv.setAttribute('style', 'color:red');
@@ -153,10 +172,11 @@ var questions = [
             
             }
 
-            if(questionIndex >= questions.length){
-                console.log('over');
-                    
-                }
+
+
+        
+
+            
     
 
     
