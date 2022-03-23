@@ -3,7 +3,10 @@ var questionEl = document.querySelector('#question-title');
 var answerChoicesEl = document.querySelector('#answer-choices');
 var divContainerEl = document.querySelector('#div-container');
 var questionResultDiv = document.querySelector('#question-result')
-
+var StartPopUp = document.querySelector('#start-popup')
+var end = document.querySelector('#end');
+var initialsEL = document.querySelector('#initials');
+var resultsEl = document.querySelector('#highscores');
    
    
 var questions = [
@@ -48,6 +51,9 @@ var questions = [
 
 
     ];
+
+    end.style.display = 'none';
+
     var timerInterval;
     var timeRemaining = 60;
     function startTimer(){
@@ -84,16 +90,18 @@ var questions = [
         var score = document.getElementById('final-score');
         score.textContent = timeRemaining;
 
-        divContainerEl.style.display = 'none;'
+        divContainerEl.style.display = 'none';
 
         questionResultDiv.remove();
 
-        
+        end.style.display = 'block';
     }
 
     var questionIndex = 0;
     //creating the next question
     function askNextQuestion(){
+
+        
         var holdQuestion = questions[questionIndex].question;
         questionEl.textContent = holdQuestion;
         var holdChoice1 = questions[questionIndex].choices[0];
@@ -181,17 +189,42 @@ var questions = [
 
     
 
-    
-
-
-
-    
-
-    
-
-    askNextQuestion();
-
+function startGame(){
     startTimer();
+    askNextQuestion();
+    StartPopUp.style.display = 'none';
+}
 
 
 
+function saveResults(){
+    var initials = initialsEL.value.trim();
+
+    if (initials !== ""){
+        var highscores = JSON.parse(window.localStorage.getItem('highscores')) || [];
+
+        var newScore = {
+            score: timeRemaining,
+            initials: initials,
+        };
+
+        highscores.push(newScore);
+        
+        window.localStorage.setItem('highscores', JSON.stringify(highscores));
+
+        
+    }
+}
+
+function printHighscores() {
+    resultsEl.textContent = 'Your final score is' + timeRemaining;
+    
+  }
+
+
+
+
+
+
+
+    

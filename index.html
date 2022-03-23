@@ -9,12 +9,13 @@
     <title>Quiz</title>
 </head>
 <body>
+    <div class = 'scores'><a href='score.html'></a></div>
     <div class="timer">Timer <span id="time">0</span></div>
     <div class="wrapper">
-        <div id="start-popup" class="Start">
+        <div id="start-popup" class="hide">
             <h1>Coding Quiz</h1>
             <p>How well do you know about coding? Take this quiz to find out!</p>
-            <button id="start">Start</button>
+            <button onClick="startGame()" id="start">Start</button>
         </div>
 
         <div id="div-container" class="hide">
@@ -32,8 +33,13 @@
         <div id="end" class="hide">
             <h2>You are finished!</h2>
             <p>Your final score is :<span id="final-score"></span></p>
-            <p>Enter initials: <button id="submit">Submit</button></p>
+            <p>Enter initials: <input type='text' id='initials' max = '2'> </p>
+            <button onClick="printHighscores()" id="submit">Submit</button>
         </div>
+
+        <div id="results"></div>
+        <h1>Highscores</h1>
+        <ol id="highscores"></ol>
     </div>
     <script type="text/javascript" src="./script.js"></script>
 </body>
